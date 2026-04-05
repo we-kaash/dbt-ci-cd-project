@@ -21,6 +21,12 @@ jobs:
       - name: Install dbt
         run: pip install dbt-core dbt-duckdb
 
+      - name: Setup dbt profile
+        run: |
+          mkdir -p ~/.dbt
+          printf "dbt_project:\n  target: dev\n  outputs:\n    dev:\n      type: duckdb\n      path: dbt.duckdb\n" > ~/.dbt/profiles.yml
+
+
       - name: Run dbt
         run: |
           dbt deps
