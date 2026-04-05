@@ -24,14 +24,7 @@ jobs:
       - name: Setup dbt profile
         run: |
           mkdir -p ~/.dbt
-          cat <<EOF > ~/.dbt/profiles.yml
-dbt_project:
-  target: dev
-  outputs:
-    dev:
-      type: duckdb
-      path: dbt.duckdb
-EOF
+          printf "dbt_project:\n  target: dev\n  outputs:\n    dev:\n      type: duckdb\n      path: dbt.duckdb\n" > ~/.dbt/profiles.yml
 
       - name: Run dbt
         run: |
