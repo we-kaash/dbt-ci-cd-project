@@ -24,18 +24,17 @@ jobs:
       - name: Setup dbt profile
         run: |
           mkdir -p ~/.dbt
-          # Create .dbt folder in GitHub machine (it doesn't exist by default)
-
-          echo "dbt_project:
+          cat <<EOF > ~/.dbt/profiles.yml
+dbt_project:
   target: dev
   outputs:
     dev:
       type: duckdb
-      path: dbt.duckdb" > ~/.dbt/profiles.yml
-          # Create profiles.yml file (this tells dbt which database to use)
+      path: dbt.duckdb
+EOF
 
       - name: Run dbt
         run: |
-          dbt deps    # install dependencies (if any)
-          dbt seed    # load CSV files into database
-          dbt build   # run models + tests (full pipeline)
+          dbt deps
+          dbt seed
+          dbt build
